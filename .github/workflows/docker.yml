@@ -11,10 +11,7 @@ name: Create and publish a Docker image
 
 on:
   push
-
-permissions: read-all|write-all
   
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -22,9 +19,7 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    permissions: read-all|write-all
 
     steps:
       - name: Checkout repository

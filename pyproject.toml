@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.95.2"
-uvicorn = "^0.22.0"
+uvicorn = {extras = ["standard"], version = "^0.22.0"}
 qrcode = {extras = ["pil"], version = "^7.4.2"}
 python-barcode = {extras = ["images"], version = "^0.14.0"}
 python-multipart = "^0.0.6"

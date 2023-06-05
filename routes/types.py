@@ -1,12 +1,15 @@
-import enum 
-import qrcode
+import enum
+
 import barcode
+import qrcode
+
+
 class Formats(str, enum.Enum):
-    
+
     """
     Comprehensive list of picture formats that pillow support writing.
     """
-    
+
     BLP = "blp"
     BMP = "bmp"
     DDS = "dds"
@@ -32,24 +35,26 @@ class Formats(str, enum.Enum):
     PDF = "pdf"
     QOI = "qoi"
     XV = "xv"
-    
+
+
 class ErrorCorrection(str, enum.Enum):
-    
+
     """
     Comprehensive list of error correction levels that qrcode supports.
     """
-    
+
     L = qrcode.ERROR_CORRECT_L
     M = qrcode.ERROR_CORRECT_M
     Q = qrcode.ERROR_CORRECT_Q
     H = qrcode.ERROR_CORRECT_H
-    
+
+
 class Colors(str, enum.Enum):
-    
+
     """
     Comprehensive list of colors that pillow supports.
     """
-    
+
     ALICEBLUE = "aliceblue"
     ANTIQUEWHITE = "antiquewhite"
     AQUA = "aqua"
@@ -197,8 +202,9 @@ class Colors(str, enum.Enum):
     WHITESMOKE = "whitesmoke"
     YELLOW = "yellow"
     YELLOWGREEN = "yellowgreen"
-    
-class BarcodeFormat(object):
+
+
+class BarcodeFormat(str, enum.Enum):
     CODE39 = "code39"
     CODE128 = "code128"
     PZN7 = "pzn7"
@@ -211,12 +217,12 @@ class BarcodeFormat(object):
     UPC_A = "upc-a"
     EAN14 = "ean14"
     GS1_128 = "gs1-128"
-    
-    def convert(format: "BarcodeFormat"):
+
+    def convert(self,format: "BarcodeFormat"):
         convertables = {
             "code39": barcode.Code39,
             "code128": barcode.Code128,
-            "pzn7": barcode.PZN7,
+            "pzn7": barcode.PZN,
             "ean13": barcode.EAN13,
             "ean8": barcode.EAN8,
             "jan": barcode.JAN,
@@ -225,10 +231,11 @@ class BarcodeFormat(object):
             "issn": barcode.ISSN,
             "upc-a": barcode.UPCA,
             "ean14": barcode.EAN14,
-            "gs1-128": barcode.Gs1_128
+            "gs1-128": barcode.Gs1_128,
         }
         return convertables[format.value]
-    
+
+
 class BarcodeOutputSelection(str, enum.Enum):
     PNG = "png"
     JPEG = "jpeg"

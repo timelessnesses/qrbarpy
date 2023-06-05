@@ -14,7 +14,9 @@
 
 1. Clone this repository
 2. Run `poetry install`
-3. Run `poetry run uvicorn qrbarpy.main:app --reload`
+3. Run `poetry run uvicorn qrbarpy.main:app --reload`  
+
+PS: There's docker image for this! Go ahead for Github Packages!
 
 ## API Usage
 

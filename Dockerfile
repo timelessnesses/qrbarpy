@@ -1,4 +1,4 @@
-FROM python:3.10-alpine
+FROM alpine:latest
 
 LABEL maintainer="Rukchad Wongprayoon <timelessnesses@timelessnesses.me>"
 LABEL version="0.1.0"
@@ -13,9 +13,8 @@ COPY . /app
 # FOR THE LOVE OF GOD RELEASE ALPINE BUILDS WITH MUSL
 # libzbar for pyzbar
 
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev g++ ninja cmake libzbar
-
-RUN pip install -r requirements.txt
-RUN apk del .build-deps gcc musl-dev g++ ninja cmake # saving spaces
-EXPOSE 8000
-CMD ["uvicorn", "main:app"]
+RUN apk add --virtual .build gcc musl-dev g++ ninja cmake && apk add libzbar libuv py3-opencv python3 py3-pip && pip install -v fastapi uvicorn[standard] qrcode[pil] python-barcode[images] python-multipart pyzbar orjson && apk del .build
+RUN apk del gcc musl-dev g++ ninja cmake # saving spaces
+EXPOSE 8000/tcp
+EXPOSE 8000/udp
+CMD ["python3","-m","uvicorn", "main:app", "--host","0.0.0.0"]

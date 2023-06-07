@@ -15,6 +15,7 @@ COPY . /app
 
 RUN apk add --virtual .build gcc musl-dev g++ ninja cmake && apk add libzbar libuv py3-opencv python3 py3-pip && pip install -v fastapi uvicorn[standard] qrcode[pil] python-barcode[images] python-multipart pyzbar orjson && apk del .build
 RUN apk del gcc musl-dev g++ ninja cmake # saving spaces
+RUN pip cache remove * # lmao
 EXPOSE 8000/tcp
 EXPOSE 8000/udp
 CMD ["python3","-m","uvicorn", "main:app", "--host","0.0.0.0"]

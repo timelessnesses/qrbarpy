@@ -1,3 +1,4 @@
+
 FROM alpine:latest
 
 LABEL maintainer="Rukchad Wongprayoon <timelessnesses@timelessnesses.me>"
@@ -6,14 +7,30 @@ LABEL description="timelessnesses.api.qrbarpy is a QR code/Barcode generator/rea
 LABEL repository="https://github.com/timelessnesses/qrbarpy"
 LABEL homepage="https://github.com/timelessnesses/qrbarpy"
 
-
 WORKDIR /app
-COPY . /app
+COPY requirements.txt /app
 
-# FOR THE LOVE OF GOD RELEASE ALPINE BUILDS WITH MUSL
-# libzbar for pyzbar
+# Install necessary packages
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    g++ \
+    ninja \
+    cmake \
+    python3-dev \
+    libzbar \
+    yaml-dev \
+    py3-opencv \
+    python3 \
+    py3-pip \
+ && python3 -m pip install --upgrade pip \
+ && pip install --no-cache-dir --upgrade fastapi uvicorn[standard] uvloop qrcode[pil] python-barcode[image] python-multipart pyzbar orjson \
+ && apk del gcc musl-dev g++ ninja cmake python3-dev yaml-dev \
+ && rm -rf /var/cache/apk/*
 
-RUN apk add --virtual .build gcc musl-dev g++ ninja cmake python3-dev && apk add libzbar libuv yaml-dev py3-opencv python3 py3-pip && python3 -m pip install --upgrade pip && pip install -v fastapi uvicorn[standard] qrcode[pil] python-barcode[images] python-multipart pyzbar orjson && apk del .build && rm -rf "$(pip cache dir)"/*
 EXPOSE 8000/tcp
 EXPOSE 8000/udp
-CMD ["python3","-m","uvicorn", "main:app", "--host","0.0.0.0"]
+
+COPY . /app
+
+CMD ["python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0"]

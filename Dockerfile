@@ -8,7 +8,6 @@ LABEL repository="https://github.com/timelessnesses/qrbarpy"
 LABEL homepage="https://github.com/timelessnesses/qrbarpy"
 
 WORKDIR /app
-COPY requirements.txt /app
 
 # Install necessary packages
 RUN apk add --no-cache \

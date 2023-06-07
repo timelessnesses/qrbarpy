@@ -13,7 +13,7 @@ COPY . /app
 # FOR THE LOVE OF GOD RELEASE ALPINE BUILDS WITH MUSL
 # libzbar for pyzbar
 
-RUN apk add --virtual .build gcc musl-dev g++ ninja cmake && apk add libzbar libuv py3-opencv python3 py3-pip && pip install -v fastapi uvicorn[standard] qrcode[pil] python-barcode[images] python-multipart pyzbar orjson && apk del .build
+RUN apk add --virtual .build gcc musl-dev g++ ninja cmake && apk add libzbar libuv py3-opencv python3 py3-pip && python3 -m pip install --upgrade pip && pip install -v fastapi uvicorn[standard] qrcode[pil] python-barcode[images] python-multipart pyzbar orjson && apk del .build
 RUN apk del gcc musl-dev g++ ninja cmake # saving spaces
 RUN pip cache remove * # lmao
 EXPOSE 8000/tcp
